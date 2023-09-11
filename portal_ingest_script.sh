@@ -8,10 +8,10 @@ ELASTICSEARCH_PORT="9200"
 REINDEX_REQUEST='
 {
   "source": {
-    "index": "kibana_sample_data_ecommerce"
+    "index": "sample_index"
   },
   "dest": {
-    "index": "test_index",
+    "index": "portal_index",
     "pipeline": "remove-field-pipeline"
   },
   "script": {
