@@ -5,7 +5,7 @@ ELASTICSEARCH_HOST="localhost"
 ELASTICSEARCH_PORT="9200"
 
 # Set the reindex request body
-REINDEX_REQUEST='
+read -d '' REINDEX_REQUEST << EOF
 {
   "source": {
     "index": "sample_index"
@@ -15,10 +15,10 @@ REINDEX_REQUEST='
     "pipeline": "remove-field-pipeline"
   },
   "script": {
-    "source": "if (ctx._source.containsKey(\'log.id.uid\')) { ctx._id = ctx._source.log.id.uid; } else if (ctx._source.containsKey(\'log.id.id\')) { ctx._id = ctx._source.log.id.id; }"
+    "source": "if (ctx._source.containsKey('log.id.uid')) { ctx._id = ctx._source.log.id.uid; } else if (ctx._source.containsKey('log.id.id')) { ctx._id = ctx._source.log.id.id; }"
   }
 }
-'
+EOF
 
 # Set the interval between reindex calls (in seconds)
 INTERVAL=300
