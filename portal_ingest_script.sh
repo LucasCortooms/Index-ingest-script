@@ -15,13 +15,7 @@ REINDEX_REQUEST='
     "pipeline": "remove-field-pipeline"
   },
   "script": {
-    "source": """
-      if (ctx._source.containsKey('log.id.uid')) {
-        ctx._id = ctx._source.log.id.uid;
-      } else if (ctx._source.containsKey('log.id.id')) {
-        ctx._id = ctx._source.log.id.id;
-      }
-    """
+    "source": "if (ctx._source.containsKey(\'log.id.uid\')) { ctx._id = ctx._source.log.id.uid; } else if (ctx._source.containsKey(\'log.id.id\')) { ctx._id = ctx._source.log.id.id; }"
   }
 }
 '
