@@ -36,11 +36,11 @@ echo
 
 while true; do
   # Send the reindex request to Elasticsearch
-  RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-    -u "$ELASTICSEARCH_USERNAME:$ELASTICSEARCH_PASSWORD" \
-    -H "Content-Type: application/json" \
-    -d "$REINDEX_REQUEST" \
-    "$ELASTICSEARCH_HOST:$ELASTICSEARCH_PORT/_reindex")
+RESPONSE=$(curl -s -X POST \
+  -u "$ELASTICSEARCH_USERNAME:$ELASTICSEARCH_PASSWORD" \
+  -H "Content-Type: application/json" \
+  -d "$REINDEX_REQUEST" \
+  "$ELASTICSEARCH_HOST:$ELASTICSEARCH_PORT/_reindex")
 
   # Check if the response indicates an authentication error
   if [ "$RESPONSE" == "401" ]; then
