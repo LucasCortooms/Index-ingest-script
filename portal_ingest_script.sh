@@ -15,7 +15,7 @@ read -d '' REINDEX_REQUEST << EOF
     "pipeline": "remove-field-pipeline"
   },
   "script": {
-    "source": "if (ctx._source.containsKey('log.id.uid')) { ctx._id = ctx._source.log.id.uid; } else if (ctx._source.containsKey('log.id.id')) { ctx._id = ctx._source.log.id.id; }"
+    "source": "if (ctx._source.containsKey('log.id.uid') && ctx._source.log.id.uid != null) { ctx._id = ctx._source.log.id.uid; } else if (ctx._source.containsKey('log.id.id') && ctx._source.log.id.id != null) { ctx._id = ctx._source.log.id.id; }"
   }
 }
 EOF
