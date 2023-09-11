@@ -13,6 +13,15 @@ REINDEX_REQUEST='
   "dest": {
     "index": "test_index",
     "pipeline": "remove-field-pipeline"
+  },
+  "script": {
+    "source": """
+      if (ctx._source.containsKey(\'log.id.uid\')) {
+        ctx._id = ctx._source.custom_id_1;
+      } else if (ctx._source.containsKey(\'log.id.id\')) {
+        ctx._id = ctx._source.custom_id_2;
+      }
+    """
   }
 }
 '
@@ -35,9 +44,12 @@ while true; do
 
   # Check if the response indicates an authentication error
   if [ "$RESPONSE" == "401" ]; then
-    echo "Error: Invalid Elasticsearch credentials"
+    echo "$(date) - Error: Invalid Elasticsearch credentials"
     exit 1
   fi
+
+  # Print a message to the console once the update has been executed, with a timestamp
+  echo "$(date) - Reindex operation completed with response code: $RESPONSE"
 
   # Wait for the specified interval before sending the next request
   sleep $INTERVAL
